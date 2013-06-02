@@ -9,7 +9,25 @@ using std::endl;        using std::cout;
 using std::cin;         using std::vector;
 using std::sqrt;
 
+// non-template forward declares
 inline int count_digits(int num);
+vector<int> split_number(int num);
+int join_number(vector<int> split);
+bool contain_same_digits(int num1, int num2);
+bool is_prime(int n, const vector<unsigned int>& primes);
+vector<unsigned int> find_primes(unsigned int number);
+vector<unsigned int> prime_sieve(unsigned int upper_limit);
+
+// template forward declares
+template <class T> void swap(T &x, T &y);
+
+template <class InputIterator>
+void print_sequence(const InputIterator& start, const InputIterator& end);
+
+template <class BidirectionalIterator>
+bool is_palindrome(BidirectionalIterator start, BidirectionalIterator end);
+
+/* ~ END OF FORWARD DECLARATIONS ~ */
 
 int count_digits(int num) {
     /* Return the number of digits in num
@@ -38,19 +56,21 @@ int join_number(vector<int> split) {
     return n;
 }
 
-template <class T>
-void swap(T &x, T &y) {
-    T z(x);
-    x = y;
-    y = z;
-}
-
-template <class InputIterator>
-void print_sequence(const InputIterator& start, const InputIterator& end) {
-    cout << "[";
-    for (auto it = start; it != end; ++it)
-        cout << *it << ", ";
-    cout << "]\n";
+bool contain_same_digits(int num1, int num2) {
+    /* Return true if num1 and num2 contain the same digits
+     */
+    int nums1[10];
+    int nums2[10];
+    std::memset(nums1, 0, sizeof(int)*10);
+    std::memset(nums2, 0, sizeof(int)*10);
+    for (; num1 > 0; num1 /= 10)
+        ++nums1[num1 % 10];
+    for (; num2 > 0; num2 /= 10)
+        ++nums2[num2 % 10];
+    for (int i = 0; i < 10; ++i)
+        if (nums1[i] != nums2[i])
+            return false;
+    return true;
 }
 
 bool is_prime(int n, const vector<unsigned int>& primes) {
@@ -99,6 +119,21 @@ vector<unsigned int> prime_sieve(unsigned int upper_limit) {
         }
     }
     return primes;
+}
+
+template <class T>
+void swap(T &x, T &y) {
+    T z(x);
+    x = y;
+    y = z;
+}
+
+template <class InputIterator>
+void print_sequence(const InputIterator& start, const InputIterator& end) {
+    cout << "[";
+    for (auto it = start; it != end; ++it)
+        cout << *it << ", ";
+    cout << "]\n";
 }
 
 template <class BidirectionalIterator>

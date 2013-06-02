@@ -7,3 +7,6 @@ test:
 
 e51:
 	$(CC) euler51.cpp -o $(TARGET_DIR)/eu51 $(ARGS)
+
+e52:
+	$(CC) euler52.cpp -o $(TARGET_DIR)/eu52 $(ARGS)
