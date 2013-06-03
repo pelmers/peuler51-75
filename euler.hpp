@@ -1,15 +1,19 @@
 #include <cstdlib>
 #include <cstring>
+#include <string>
 #include <cmath>
 #include <iostream>
+#include <fstream>
 #include <vector>
 #include <algorithm>
+#include <gmpxx.h>
 
 using std::endl;        using std::cout;
 using std::cin;         using std::vector;
 using std::sqrt;
 
 // non-template forward declares
+mpz_class combinations(int n, int r);
 inline int count_digits(int num);
 vector<int> split_number(int num);
 int join_number(vector<int> split);
@@ -27,7 +31,22 @@ void print_sequence(const InputIterator& start, const InputIterator& end);
 template <class BidirectionalIterator>
 bool is_palindrome(BidirectionalIterator start, BidirectionalIterator end);
 
+template <class InputIterator, class T>
+int count_num_equal(InputIterator start, InputIterator end, const T& val);
+
 /* ~ END OF FORWARD DECLARATIONS ~ */
+
+mpz_class combinations(int n, int r) {
+    if (n <= r)
+        return 1;
+    mpz_class num = 1;
+    for (int i = r + 1; i <= n; ++i)
+        num *= i;
+    mpz_class denom = 1;
+    for (int i = 2; i <= (n-r); ++i)
+        denom *= i;
+    return num / denom;
+}
 
 int count_digits(int num) {
     /* Return the number of digits in num
@@ -155,3 +174,12 @@ bool is_palindrome(BidirectionalIterator start, BidirectionalIterator end) {
     return true;
 }
 
+
+template <class InputIterator, class T>
+int count_num_equal(InputIterator start, InputIterator end, const T& val) {
+    int c = 0;
+    for (auto it = start; it != end; ++it)
+        if (*it == val)
+            ++c;
+    return c;
+}

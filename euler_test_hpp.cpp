@@ -24,5 +24,6 @@ int main(int argc, char** argv) {
         contain_same_digits(73189, 38103) << '\n';
     cout << "73189 and 39817 have same digits? " <<
         contain_same_digits(73189, 39817) << '\n';
+    cout << "100 C 50 = " << combinations(100,50) << '\n';
     return 0;
 }

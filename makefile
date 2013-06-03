@@ -1,5 +1,5 @@
 CC = g++
-ARGS = -O2 -Wall -ffast-math -lm -funroll-loops -std=c++0x
+ARGS = -O2 -Wall -ffast-math -lm -lgmp -lgmpxx -funroll-loops -std=c++0x
 TARGET_DIR = linux_bin
 
 test:
@@ -10,3 +10,9 @@ e51:
 
 e52:
 	$(CC) euler52.cpp -o $(TARGET_DIR)/eu52 $(ARGS)
+
+e53:
+	$(CC) euler53.cpp -o $(TARGET_DIR)/eu53 $(ARGS)
+
+e54:
+	$(CC) euler54.cpp -o $(TARGET_DIR)/eu54 $(ARGS)
