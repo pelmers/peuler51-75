@@ -46,7 +46,7 @@ int is_royal_flush(const vector<Card>&);
 vector<int> score_hand(vector<Card>&, int);
 int compare_hands(vector<Card>&, vector<Card>&);
 int tie_break_hands(vector<Card>, vector<Card>, int);
-int main(int argc, char** argv);
+int main(int, char**);
 
 int get_rank(char repr) {
     switch (repr) {
@@ -79,7 +79,8 @@ int get_rank(char repr) {
 }
 
 int get_max(const vector<Card>& hand) {
-    /* Return the rank of the highest card in hand
+    /**
+     * Return the rank of the highest card in hand
      */
     int max = 0;
     for (auto it = hand.begin(); it != hand.end(); ++it)
@@ -89,6 +90,10 @@ int get_max(const vector<Card>& hand) {
 }
 
 int is_pair(const vector<Card>& hand) {
+    /**
+     * If a sole pair is found, return its rank
+     * Else return NONE
+     */
     // make a frequency table of every rank
     int pair = NONE;
     vector<int> frequencies(15);
@@ -107,6 +112,10 @@ int is_pair(const vector<Card>& hand) {
 }
 
 int is_two_pairs(const vector<Card>& hand) {
+    /**
+     * If two pairs are present, return the larger rank
+     * Else return NONE
+     */
     int largest_pair = NONE;
     vector<int> frequencies(15);
     for (auto it = hand.begin(); it != hand.end(); ++it)
@@ -114,7 +123,7 @@ int is_two_pairs(const vector<Card>& hand) {
     for (size_t i = 0; i < 15; ++i) {
         if (frequencies[i] == 2) {
             if (largest_pair != NONE)
-                // already found a pair somewhere, this is second
+                // already found a pair somewhere, so this is second
                 return i;
             largest_pair = i;
         }
@@ -123,6 +132,10 @@ int is_two_pairs(const vector<Card>& hand) {
 }
 
 int is_triple(const vector<Card>& hand) {
+    /**
+     * Return the rank of the triple
+     * If none found, return NONE
+     */
     vector<int> frequencies(15);
     for (auto it = hand.begin(); it != hand.end(); ++it)
         ++frequencies[it->rank];
@@ -133,7 +146,8 @@ int is_triple(const vector<Card>& hand) {
 }
 
 int is_straight(const vector<Card>& hand) {
-    /* If the hand is a straight, return the highest card's rank
+    /**
+     * If the hand is a straight, return the highest card's rank
      * Else return NONE
      */
     if (hand.size() != 5)
@@ -143,7 +157,8 @@ int is_straight(const vector<Card>& hand) {
     for (auto it = hand.begin(); it != hand.end(); ++it)
         values.push_back(it->rank);
     std::sort(values.begin(), values.end());
-    for (std::size_t i = 1; i < values.size(); ++i)
+    for (size_t i = 1; i < values.size(); ++i)
+        // make sure common difference is 1
         if (values[i] - values[i-1] != 1)
             return NONE;
     // return the biggest element
@@ -151,7 +166,8 @@ int is_straight(const vector<Card>& hand) {
 }
 
 int is_flush(const vector<Card>& hand) {
-    /* If the hand is a flush, return the highest card's rank
+    /**
+     * If the hand is a flush, return the highest card's rank
      * Else return NONE
      */ 
     int max = 0;
@@ -168,12 +184,21 @@ int is_flush(const vector<Card>& hand) {
 }
 
 int is_full_house(const vector<Card>& hand) {
+    /**
+     * If the hand is a full house (pair with triple), return the
+     * rank of the triple
+     * Else return NONE
+     */
     if (is_pair(hand))
         return is_triple(hand);
     return NONE;
 }
 
 int is_four_of_a_kind(const vector<Card>& hand) {
+    /**
+     * If the hand contains four of a kind, return its rank
+     * Else return NONE
+     */
     vector<int> frequencies(15);
     for (auto it = hand.begin(); it != hand.end(); ++it)
         ++frequencies[it->rank];
@@ -184,7 +209,8 @@ int is_four_of_a_kind(const vector<Card>& hand) {
 }
 
 int is_straight_flush(const vector<Card>& hand) {
-    /* If the hand is a straight flush, return the highest card's rank
+    /**
+     * If the hand is a straight flush, return the highest card's rank
      * Else return NONE
      */
     if (is_flush(hand))
@@ -193,7 +219,8 @@ int is_straight_flush(const vector<Card>& hand) {
 }
 
 int is_royal_flush(const vector<Card>& hand) {
-    /* If the hand is a royal flush, return ACE
+    /**
+     * If the hand is a royal flush, return ACE
      * Else return NONE
      */
     if (is_straight_flush(hand))
@@ -204,8 +231,10 @@ int is_royal_flush(const vector<Card>& hand) {
 }
 
 vector<int> score_hand(vector<Card>& hand, int disregard) {
-    // Return the winning play and best card of that winning play
-    // Do not count the rank defined by disregard
+    /**
+     * Return the winning play and best card of that winning play
+     * Do not count the rank defined by disregard
+     */
     if (disregard != NONE)
         for (std::size_t i = 0; i < hand.size(); ++i)
             if (hand[i].rank == disregard)
@@ -272,9 +301,11 @@ vector<int> score_hand(vector<Card>& hand, int disregard) {
 }
 
 int compare_hands(vector<Card>& hand1, vector<Card>& hand2) {
-    // Return 1 if hand1 wins
-    // 2 if hand2 wins
-    // 0 if tie
+    /**
+     * Return 1 if hand1 wins
+     * 2 if hand2 wins
+     * 0 if tie
+     */
     vector<int> score1 = score_hand(hand1, NONE);
     vector<int> score2 = score_hand(hand2, NONE);
     if (score1[0] != score2[0]) {
@@ -291,7 +322,14 @@ int compare_hands(vector<Card>& hand1, vector<Card>& hand2) {
 }
 
 int tie_break_hands(vector<Card> hand1, vector<Card> hand2, int tie) {
+    /**
+     * Resolve initially tied hands on the rank given by tie
+     * Return 1 if hand1 wins
+     * 2 if hand2 wins
+     * If truly a tie, return 0
+     */
     if (hand1.size() == 0 || hand2.size() == 0)
+        // it really is a tie!
         return 0;
     vector<int> score1 = score_hand(hand1, tie);
     vector<int> score2 = score_hand(hand2, tie);
@@ -305,6 +343,7 @@ int tie_break_hands(vector<Card> hand1, vector<Card> hand2, int tie) {
             return 1;
         return 2;
     }
+    // still a tie, so recurse
     return tie_break_hands(hand1, hand2, score1[1]);
 }
 
