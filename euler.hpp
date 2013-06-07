@@ -10,7 +10,8 @@
 
 using std::endl;        using std::cout;
 using std::cin;         using std::vector;
-using std::sqrt;
+using std::sqrt;        using std::string;
+using std::size_t;
 
 // non-template forward declares
 mpz_class combinations(int n, int r);
@@ -62,6 +63,7 @@ vector<int> split_number(int num) {
     vector<int> split;
     for (; num > 0; num /= 10)
         split.push_back(num % 10);
+    // Reverse the digits
     std::reverse(split.begin(), split.end());
     return split;
 }
@@ -95,7 +97,7 @@ bool contain_same_digits(int num1, int num2) {
 bool is_prime(int n, const vector<unsigned int>& primes) {
     // Determine primacy of number n given vector primes,
     // containing all primes less than the square root of n
-    int r = sqrt(n) + 1;
+    unsigned int r = sqrt(n) + 1;
     auto end = primes.end();
     for (auto it = primes.begin(); it != end && (*it) < r; ++it) {
         if (!(n % (*it)))
