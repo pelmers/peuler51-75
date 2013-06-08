@@ -5,6 +5,9 @@ TARGET_DIR = linux_bin
 test:
 	$(CC) euler_test_hpp.cpp -o test_hpp $(ARGS)
 
+docs:
+	doxygen Doxyfile
+
 e51:
 	$(CC) euler51.cpp -o $(TARGET_DIR)/eu51 $(ARGS)
 

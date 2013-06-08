@@ -18,5 +18,4 @@
 
 # compiled unit tests
 test_hpp
-# Doxygen
-Doxyfile
+documentation/
