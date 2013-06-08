@@ -16,8 +16,11 @@ using std::size_t;
 // non-template forward declares
 mpz_class combinations(int, int);
 inline int count_digits(int);
+int reverse_number(int);
 vector<int> split_number(int);
 int join_number(vector<int>);
+int digit_sum(int);
+int digit_sum(mpz_class&);
 bool contain_same_digits(int, int);
 bool is_prime(int, const vector<unsigned int>&);
 vector<unsigned int> find_primes(unsigned int);
@@ -38,7 +41,7 @@ int count_num_equal(InputIterator, InputIterator, const T&);
 /* ~ END OF FORWARD DECLARATIONS ~ */
 
 mpz_class combinations(int n, int r) {
-    /**
+    /*
      * Return the number of combinations of r elements from n
      * Formula: n!/(n!(n-r)!)
      */
@@ -62,6 +65,20 @@ int count_digits(int num) {
     return c;
 }
 
+int reverse_number(int num) {
+    /**Find reverse of a number
+     * Return the reverse of a number
+     * Ex: 47 -> 74
+     */
+    int r = 0;
+    int d = count_digits(num);
+    for (int i = 1; i <= d; ++i) {
+        r += std::pow(10, (d - i)) * (num % 10);
+        num /= 10;
+    }
+    return r;
+}
+
 vector<int> split_number(int num) {
     /**
      * Split the digits of a number into a vector
@@ -82,6 +99,27 @@ int join_number(vector<int> split) {
     for (int i = 0, e = split.size(); i < e; ++i)
         n += split[i] * std::pow(10, (e - i - 1));
     return n;
+}
+
+int digit_sum(int num) {
+    /**Find sum of digits
+     * Return the sum of the digits in the number
+     */
+    int sum;
+    for (sum = 0; num > 0; num /= 10)
+        sum += num % 10;
+    return sum;
+}
+
+int digit_sum(mpz_class& bignum) {
+    /**Find sum of digits in a bignum
+     * Return the sum of the digits in the number
+     */
+    int sum = 0;
+    string bignum_str = bignum.get_str();
+    for (int i = 0; i < (int)bignum_str.size(); ++i)
+        sum += bignum_str[i] - '0';
+    return sum;
 }
 
 bool contain_same_digits(int num1, int num2) {

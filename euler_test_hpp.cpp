@@ -25,5 +25,6 @@ int main(int argc, char** argv) {
     cout << "73189 and 39817 have same digits? " <<
         contain_same_digits(73189, 39817) << '\n';
     cout << "100 C 50 = " << combinations(100,50) << '\n';
+    cout << 39 << " digit sum: " << digit_sum(39) << '\n';
     return 0;
 }
