@@ -16,11 +16,14 @@ using std::size_t;
 // non-template forward declares
 mpz_class combinations(int, int);
 inline int count_digits(int);
+inline int count_digits(const mpz_class&);
 int reverse_number(int);
+mpz_class reverse_number(const mpz_class&);
 vector<int> split_number(int);
+vector<int> split_number(mpz_class);
 int join_number(vector<int>);
 int digit_sum(int);
-int digit_sum(mpz_class&);
+int digit_sum(mpz_class);
 bool contain_same_digits(int, int);
 bool is_prime(int, const vector<unsigned int>&);
 vector<unsigned int> find_primes(unsigned int);
@@ -41,7 +44,7 @@ int count_num_equal(InputIterator, InputIterator, const T&);
 /* ~ END OF FORWARD DECLARATIONS ~ */
 
 mpz_class combinations(int n, int r) {
-    /*
+    /**
      * Return the number of combinations of r elements from n
      * Formula: n!/(n!(n-r)!)
      */
@@ -65,6 +68,13 @@ int count_digits(int num) {
     return c;
 }
 
+int count_digits(const mpz_class& bignum) {
+    /**Count digits in a big number
+     * Return the number of digits in bignum
+     */
+    return bignum.get_str().size();
+}
+
 int reverse_number(int num) {
     /**Find reverse of a number
      * Return the reverse of a number
@@ -79,6 +89,15 @@ int reverse_number(int num) {
     return r;
 }
 
+mpz_class reverse_number(const mpz_class& bignum) {
+    /**
+     * Return the reverse of a big number
+     */
+    string bigstr(bignum.get_str());
+    std::reverse(bigstr.begin(), bigstr.end());
+    return mpz_class(bigstr, 10);
+}
+
 vector<int> split_number(int num) {
     /**
      * Split the digits of a number into a vector
@@ -88,6 +107,16 @@ vector<int> split_number(int num) {
         split.push_back(num % 10);
     // Reverse the digits
     std::reverse(split.begin(), split.end());
+    return split;
+}
+
+vector<int> split_number(mpz_class num) {
+    /**
+     * Split the digits of a long number into a vector
+     */
+    vector<int> split;
+    for (; num > 0; num /= 10)
+        split.push_back(mpz_get_ui(num.get_mpz_t()) % 10);
     return split;
 }
 
@@ -111,14 +140,13 @@ int digit_sum(int num) {
     return sum;
 }
 
-int digit_sum(mpz_class& bignum) {
+int digit_sum(mpz_class bignum) {
     /**Find sum of digits in a bignum
      * Return the sum of the digits in the number
      */
-    int sum = 0;
-    string bignum_str = bignum.get_str();
-    for (int i = 0; i < (int)bignum_str.size(); ++i)
-        sum += bignum_str[i] - '0';
+    int sum;
+    for (sum = 0; bignum > 0; bignum /= 10)
+        sum += mpz_get_ui(bignum.get_mpz_t()) % 10;
     return sum;
 }
 

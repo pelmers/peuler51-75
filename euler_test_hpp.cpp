@@ -7,6 +7,7 @@ int main(int argc, char** argv) {
     int y = 8;
     vector<int> z = {1,2,3,2,1};
     int b[] = {1, 2, 3, 4, 5};
+    mpz_class bignum("39089038081510");
     swap(x,y);
     if (x == 8 && y == 5)
         cout << "Swap works...\n";
@@ -24,7 +25,8 @@ int main(int argc, char** argv) {
         contain_same_digits(73189, 38103) << '\n';
     cout << "73189 and 39817 have same digits? " <<
         contain_same_digits(73189, 39817) << '\n';
-    cout << "100 C 50 = " << combinations(100,50) << '\n';
+    cout << "5 C 2 = " << combinations(5,2) << '\n';
     cout << 39 << " digit sum: " << digit_sum(39) << '\n';
+    cout << reverse_number(bignum) << '\n';
     return 0;
 }
