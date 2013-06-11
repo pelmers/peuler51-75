@@ -25,3 +25,9 @@ e55:
 
 e56:
 	$(CC) euler56.cpp -o $(TARGET_DIR)/eu56 $(ARGS)
+
+e57:
+	$(CC) euler57.cpp -o $(TARGET_DIR)/eu57 $(ARGS)
+
+e58:
+	$(CC) euler58.cpp -o $(TARGET_DIR)/eu58 $(ARGS)
