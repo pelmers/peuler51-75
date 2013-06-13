@@ -23,7 +23,8 @@ vector<int> split_number(int);
 vector<int> split_number(mpz_class);
 int join_number(vector<int>);
 int digit_sum(int);
-int digit_sum(mpz_class);
+int digit_sum(const mpz_class&);
+inline unsigned int concat_nums(unsigned int, unsigned int);
 bool contain_same_digits(int, int);
 bool is_prime(int, const vector<unsigned int>&);
 vector<unsigned int> find_primes(unsigned int);
@@ -140,14 +141,22 @@ int digit_sum(int num) {
     return sum;
 }
 
-int digit_sum(mpz_class bignum) {
+int digit_sum(const mpz_class& bignum) {
     /**Find sum of digits in a bignum
      * Return the sum of the digits in the number
      */
-    int sum;
-    for (sum = 0; bignum > 0; bignum /= 10)
-        sum += mpz_get_ui(bignum.get_mpz_t()) % 10;
+    int sum = 0;
+    string bigstr(bignum.get_str());
+    for (int i = 0; i < (int)bigstr.size(); ++i)
+        sum += bigstr[i] - '0';
     return sum;
+}
+
+unsigned int concat_nums(unsigned int num1, unsigned int num2) {
+    /**Concatenate numbers like strings
+     * Make a new number starting with num1 followed by num2
+     */
+    return (num1 * std::pow(10, count_digits(num2)) + num2);
 }
 
 bool contain_same_digits(int num1, int num2) {
