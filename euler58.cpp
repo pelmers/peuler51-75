@@ -4,29 +4,26 @@ int main(int, char**);
 
 int main(int argc, char** argv) {
     // primes up to 1 billion
-    vector<unsigned int> primes = prime_sieve(1000000000);
+    vector<unsigned int> primes = prime_sieve(sqrt(1000000000));
     int num_primes = 8;
-    int diagonals = 13;
-    int topright = 31;
-    int topleft = 37;
-    int botleft = 43;
-    int common_diff = 6;
-    int next_diff = 18;
-    while (((double)num_primes / (double)diagonals) >= 0.1) {
-        next_diff += 8;
-        common_diff += 2;
-        topright += next_diff;
-        topleft = topright + common_diff;
-        botleft = topleft + common_diff;
-        if (std::binary_search(primes.begin(), primes.end(), topright))
+    int sides = 6;
+    int topright;
+    int topleft;
+    int botleft;
+    while ((double)num_primes / ((double)(sides*2 + 1)) >= 0.1) {
+        sides += 2;
+        botleft = (sides+1)*(sides+1) - sides;
+        topleft  = botleft - sides;
+        topright = topleft - sides;
+        if (is_prime(topright, primes))
             ++num_primes;
-        if (std::binary_search(primes.begin(), primes.end(), topleft))
+        if (is_prime(topleft, primes))
             ++num_primes;
-        if (std::binary_search(primes.begin(), primes.end(), botleft))
+        if (is_prime(botleft, primes))
             ++num_primes;
-        diagonals += 2;
     }
-    cout << "Side length: " << (diagonals - 1)/2 << '\n';
-    cout << "Ratio is " << (double)num_primes/diagonals << '\n';
+    cout << "Side length: " << sides+1 << '\n';
+    cout << "Ratio is " << (double)num_primes/(sides*2+1) << '\n';
+    cout << num_primes << " / " << sides*2 + 1 << '\n';
     return 0;
 }
