@@ -1,33 +1,35 @@
-CC = g++
-ARGS = -O2 -Wall -ffast-math -lm -lgmp -lgmpxx -funroll-loops -std=c++0x
+ARGS = -O2 -Wall -lm -lgmp -lgmpxx -funroll-loops -std=c++0x
 TARGET_DIR = linux_bin
 
 test:
-	$(CC) euler_test_hpp.cpp -o test_hpp $(ARGS)
+	$(CXX) euler_test_hpp.cpp -o test_hpp $(ARGS)
 
 docs:
 	doxygen Doxyfile
 
 e51:
-	$(CC) euler51.cpp -o $(TARGET_DIR)/eu51 $(ARGS)
+	$(CXX) euler51.cpp -o $(TARGET_DIR)/eu51 $(ARGS)
 
 e52:
-	$(CC) euler52.cpp -o $(TARGET_DIR)/eu52 $(ARGS)
+	$(CXX) euler52.cpp -o $(TARGET_DIR)/eu52 $(ARGS)
 
 e53:
-	$(CC) euler53.cpp -o $(TARGET_DIR)/eu53 $(ARGS)
+	$(CXX) euler53.cpp -o $(TARGET_DIR)/eu53 $(ARGS)
 
 e54:
-	$(CC) euler54.cpp -o $(TARGET_DIR)/eu54 $(ARGS)
+	$(CXX) euler54.cpp -o $(TARGET_DIR)/eu54 $(ARGS)
 
 e55:
-	$(CC) euler55.cpp -o $(TARGET_DIR)/eu55 $(ARGS)
+	$(CXX) euler55.cpp -o $(TARGET_DIR)/eu55 $(ARGS)
 
 e56:
-	$(CC) euler56.cpp -o $(TARGET_DIR)/eu56 $(ARGS)
+	$(CXX) euler56.cpp -o $(TARGET_DIR)/eu56 $(ARGS)
 
 e57:
-	$(CC) euler57.cpp -o $(TARGET_DIR)/eu57 $(ARGS)
+	$(CXX) euler57.cpp -o $(TARGET_DIR)/eu57 $(ARGS)
 
 e58:
-	$(CC) euler58.cpp -o $(TARGET_DIR)/eu58 $(ARGS)
+	$(CXX) euler58.cpp -o $(TARGET_DIR)/eu58 $(ARGS)
+
+e59:
+	$(CXX) euler59.cpp -o $(TARGET_DIR)/eu59 $(ARGS)
