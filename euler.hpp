@@ -1,3 +1,6 @@
+#ifndef EULER_INC_
+#define EULER_INC_
+
 #include <cstdlib>
 #include <cstring>
 #include <string>
@@ -287,3 +290,5 @@ int count_num_equal(InputIterator start, InputIterator end, const T& val) {
             ++c;
     return c;
 }
+
+#endif
