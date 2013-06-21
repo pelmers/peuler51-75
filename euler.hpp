@@ -188,7 +188,7 @@ bool is_prime(int n, const vector<unsigned int>& primes) {
      * Determine primacy of number n given vector primes,
      * containing all primes less than the square root of n
      */
-    unsigned int r = sqrt(n) + 1;
+    unsigned int r = sqrt(n);
     auto end = primes.end();
     for (auto it = primes.begin(); it != end && (*it) < r; ++it) {
         if (!(n % (*it)))
@@ -224,12 +224,12 @@ vector<unsigned int> prime_sieve(unsigned int upper_limit) {
      * Implements sieve of Eratosthenes
      */
     ++upper_limit;
-    vector<bool> sieve(upper_limit, true);
+    vector<bool> sieve(upper_limit, false);
     vector<unsigned int> primes;
     for (unsigned int i = 2; i < upper_limit; ++i) {
-        if (sieve[i]) {
+        if (!(sieve[i])) {
             for (unsigned int j = i*i; j < upper_limit; j += i)
-                sieve[j] = false;
+                sieve[j] = true;
             primes.push_back(i);
         }
     }
