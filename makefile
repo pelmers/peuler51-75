@@ -36,3 +36,6 @@ e59:
 
 e60:
 	$(CXX) euler60.cpp -o $(TARGET_DIR)/eu60 $(ARGS)
+
+e61:
+	$(CXX) euler61.cpp -o $(TARGET_DIR)/eu61 $(ARGS)
