@@ -1,13 +1,19 @@
 #ifndef EULER_INC_
 #define EULER_INC_
 
+// C includes
 #include <cstdlib>
 #include <cstring>
-#include <string>
 #include <cmath>
+// IO
 #include <iostream>
 #include <fstream>
+// containers
 #include <vector>
+#include <set>
+#include <map>
+// other
+#include <string>
 #include <algorithm>
 #include <gmpxx.h>
 
