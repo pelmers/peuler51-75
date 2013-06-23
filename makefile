@@ -42,3 +42,6 @@ e61:
 
 e62:
 	$(CXX) euler62.cpp -o $(TARGET_DIR)/eu62 $(ARGS)
+
+e63:
+	$(CXX) euler63.cpp -o $(TARGET_DIR)/eu63 $(ARGS)
