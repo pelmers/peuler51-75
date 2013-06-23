@@ -12,11 +12,14 @@
 *.la
 *.a
 
-# temp and undo files
+# Compiled binaries
+linux_bin/*
+
+# Temp and undo files
 *.swp
 *.un~
 
-# compiled unit tests
+# Compiled unit tests
 test_hpp
 documentation/
 Doxyfile
