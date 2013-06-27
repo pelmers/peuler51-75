@@ -40,16 +40,11 @@ vector<unsigned int> find_primes(unsigned int);
 vector<unsigned int> prime_sieve(unsigned int);
 
 // template forward declares
-template <class T> void swap(T&, T&);
-
 template <class InputIterator>
 void print_sequence(const InputIterator&, const InputIterator&);
 
 template <class BidirectionalIterator>
 bool is_palindrome(BidirectionalIterator, BidirectionalIterator);
-
-template <class InputIterator, class T>
-int count_num_equal(InputIterator, InputIterator, const T&);
 
 /* ~ END OF FORWARD DECLARATIONS ~ */
 
@@ -242,15 +237,6 @@ vector<unsigned int> prime_sieve(unsigned int upper_limit) {
     return primes;
 }
 
-template <class T>
-void swap(T &x, T &y) {
-    /**
-     * Swap elements x and y
-     */
-    T z(x);
-    x = y;
-    y = z;
-}
 
 template <class InputIterator>
 void print_sequence(const InputIterator& start, const InputIterator& end) {
@@ -284,17 +270,5 @@ bool is_palindrome(BidirectionalIterator start, BidirectionalIterator end) {
     return true;
 }
 
-
-template <class InputIterator, class T>
-int count_num_equal(InputIterator start, InputIterator end, const T& val) {
-    /**
-     * Return the number of elements between start and end equal to val
-     */
-    int c = 0;
-    for (auto it = start; it != end; ++it)
-        if (*it == val)
-            ++c;
-    return c;
-}
 
 #endif
