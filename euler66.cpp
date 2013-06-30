@@ -19,6 +19,13 @@ std::pair<mpz_class, mpz_class> pell_equation(int d) {
     vector<int> t = find_repeated_sqrt(d);
     if (is_square(d))
         return p;
+    // Pell's equation is closely related to the continued fraction of sqrt(d)
+    // --> x^2 - dy^2 = 1
+    //           dy^2 = x^2 - 1
+    //              d = (x^2 - 1) / (y^2)
+    //       sqrt(d) ~= sqrt(x^2 / y^2) **one becomes insignificant
+    // Therefore x^2/y^2 is a fractional approximation of sqrt(d), given by
+    // one of its convergent fractions
     for (int i = 0; i < INT_MAX-1 ; ++i) {
         p = repeated_convergent(i, t);
         if ((p.first*p.first - d*p.second*p.second) == 1)
