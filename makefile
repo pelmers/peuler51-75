@@ -1,10 +1,7 @@
 ARGS = -O2 -Wall -lm -lgmp -lgmpxx -funroll-loops -std=c++0x
 TARGET_DIR = linux_bin
 
-all: test docs e51 e52 e53 e54 e55 e56 e57 e58 e59 e60 e61 e62 e63 e64 e65
-
-test:
-	$(CXX) euler_test_hpp.cpp -o test_hpp $(ARGS)
+all: docs e51 e52 e53 e54 e55 e56 e57 e58 e59 e60 e61 e62 e63 e64 e65 e66
 
 docs:
 	doxygen Doxyfile

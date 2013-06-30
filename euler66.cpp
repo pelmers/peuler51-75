@@ -1,7 +1,6 @@
 #include "euler.hpp"
 
 inline bool is_square(int);
-inline bool is_square(const mpz_class&);
 mpz_class diophantine_66(int);
 int main(void);
 
@@ -24,6 +23,7 @@ std::pair<mpz_class, mpz_class> pell_equation(int d) {
     //           dy^2 = x^2 - 1
     //              d = (x^2 - 1) / (y^2)
     //       sqrt(d) ~= sqrt(x^2 / y^2) **one becomes insignificant
+    //       sqrt(d) ~= x / y
     // Therefore x^2/y^2 is a fractional approximation of sqrt(d), given by
     // one of its convergent fractions
     for (int i = 0; i < INT_MAX-1 ; ++i) {

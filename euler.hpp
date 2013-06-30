@@ -26,7 +26,7 @@ using std::size_t;
 
 // non-template forward declares
 mpz_class combinations(int, int);
-inline int count_digits(int);
+inline int count_digits(long);
 inline int count_digits(const mpz_class&);
 int reverse_number(int);
 mpz_class reverse_number(const mpz_class&);
@@ -35,7 +35,7 @@ vector<int> split_number(mpz_class);
 int join_number(vector<int>);
 int digit_sum(int);
 int digit_sum(const mpz_class&);
-inline unsigned int concat_nums(unsigned int, unsigned int);
+inline unsigned long concat_nums(unsigned long, unsigned long);
 bool contain_same_digits(int, int);
 bool is_prime(int, const vector<unsigned int>&);
 vector<unsigned int> find_primes(unsigned int);
@@ -72,7 +72,7 @@ mpz_class combinations(int n, int r) {
     return num / denom;
 }
 
-int count_digits(int num) {
+int count_digits(long num) {
     /**
      * Return the number of digits in num
      */
@@ -164,7 +164,7 @@ int digit_sum(const mpz_class& bignum) {
     return sum;
 }
 
-unsigned int concat_nums(unsigned int num1, unsigned int num2) {
+unsigned long concat_nums(unsigned long num1, unsigned long num2) {
     /**Concatenate numbers like strings
      * Make a new number starting with num1 followed by num2
      */
