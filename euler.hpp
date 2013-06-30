@@ -40,6 +40,7 @@ bool contain_same_digits(int, int);
 bool is_prime(int, const vector<unsigned int>&);
 vector<unsigned int> find_primes(unsigned int);
 vector<unsigned int> prime_sieve(unsigned int);
+vector<int> find_repeated_sqrt(int);
 
 // template forward declares
 template <class InputIterator>
@@ -47,6 +48,11 @@ void print_sequence(const InputIterator&, const InputIterator&);
 
 template <class BidirectionalIterator>
 bool is_palindrome(BidirectionalIterator, BidirectionalIterator);
+
+template <class Callable>
+std::pair<mpz_class, mpz_class> repeated_convergent(int, Callable);
+// takes a vector and creates a Callable for it
+std::pair<mpz_class, mpz_class> repeated_convergent(int, const vector<int>&);
 
 /* ~ END OF FORWARD DECLARATIONS ~ */
 
@@ -239,6 +245,33 @@ vector<unsigned int> prime_sieve(unsigned int upper_limit) {
     return primes;
 }
 
+vector<int> find_repeated_sqrt(int num) {
+    /* Return a vector in the form of [m, a0, a1, ... an]
+     * where m is the first square less than sqrt(num) and
+     * a_n is the sequence of repeated terms in the continued fraction
+     * If num is square, return a single element vector containing num
+     * E.g: sqrt(2) = 2 + 1
+     *                    -----------
+     *                    2 + 1
+     *                        -------
+     *                        2 + ...
+     *
+     * find_repeated_sqrt(2) -> [1, 2]
+     */
+    // initialize terms with the first number
+    vector<int> terms{int(sqrt(num))};
+    if (terms[0] * terms[0] == num)
+        return terms;
+    int d(1), m(0), a(terms[0]);
+    while (a != 2*terms[0]) {
+        m = d * a - m;
+        d = (num - m * m) / d;
+        a = (terms[0] + m) / d;
+        terms.push_back(a);
+    }
+    return terms;
+}
+
 
 template <class InputIterator>
 void print_sequence(const InputIterator& start, const InputIterator& end) {
@@ -270,6 +303,41 @@ bool is_palindrome(BidirectionalIterator start, BidirectionalIterator end) {
             return false;
     }
     return true;
+}
+
+template <class Callable>
+std::pair<mpz_class, mpz_class> repeated_convergent(int k, Callable term_func) {
+    /* Return a pair of numerator, denominator that is the (k-1)th convergent
+     * of the continued fraction where each (k-1)th term is given by term_func
+     *
+     * E.g: let t be the term_func of e.
+     *      t(0) = 2
+     *      t(n) = (n % 3 == 2) ? (2*(n+1)/3) : 1;
+     * as a lambda:
+     * [](int n) { return (n == 0) ? 2 : (n % 3 == 2) ? (2*(n+1)/3) : 1; }
+     */
+    std::pair<mpz_class, mpz_class> frac(term_func(k), 1);
+    while (k --> 0) {
+        frac.second += term_func(k) * frac.first;
+        std::swap(frac.first, frac.second);
+    }
+    return frac;
+}
+
+std::pair<mpz_class, mpz_class> repeated_convergent(int k, const vector<int>& terms) {
+    /* Return a pair of numerator, denominator that is the (k-1)th convergent
+     * of the continued fraction defined by terms,
+     * where terms[0] is the first term, and terms[1] to terms[n] are
+     * repeated ad infinitum
+     *
+     * E.g: terms of sqrt(2): [1, 2]
+     * repeated_convergent(0, [1, 2]) -> std::pair<mpz, mpz>(1, 1)
+     * repeated_convergent(4, [1, 2]) -> std::pair<mpz, mpz>(41, 29)
+     */
+    // create functor which simulates cycling of tail of terms
+    return repeated_convergent(k, [&terms](int t) {
+            return (t == 0) ? terms[0]:terms[(t-1) % (terms.size()-1) + 1];
+            });
 }
 
 #endif
