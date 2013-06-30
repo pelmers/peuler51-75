@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <cmath>
+#include <climits>
 // IO
 #include <iostream>
 #include <fstream>
@@ -14,6 +15,7 @@
 #include <map>
 // other
 #include <string>
+#include <utility>
 #include <algorithm>
 #include <gmpxx.h>
 
@@ -269,6 +271,5 @@ bool is_palindrome(BidirectionalIterator start, BidirectionalIterator end) {
     }
     return true;
 }
-
 
 #endif
