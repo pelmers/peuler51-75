@@ -257,17 +257,14 @@ vector<int> totient_sieve(unsigned int upper) {
     vector<int> totes(upper);
     // Initialize the totient of n to itself
     std::iota(totes.begin(), totes.end(), 0);
-    for (unsigned int i = 2; i < upper; ++i) {
-        if (totes[i] == i) {
+    for (unsigned int i = 2; i < upper; ++i)
+        if (totes[i] == i)
             // Then this number is prime, so everything < i is totative
-            totes[i] -= 1;
             // Find every multiple of this prime and multiply by (1 - 1/p)
             // --> Refactored into multiplication by ((p - 1) / p)
             // --> to stay integral throughout the operation
-            for (unsigned int j = i + i; j < upper; j += i)
+            for (unsigned int j = i; j < upper; j += i)
                 totes[j] = (totes[j] / i) * (i - 1);
-        }
-    }
     return totes;
 }
 
