@@ -176,10 +176,8 @@ bool contain_same_digits(int num1, int num2) {
      * Return true if num1 and num2 contain the same digits
      */
     // make a table of the frequency of each digit in each num
-    int nums1[10];
-    int nums2[10];
-    std::memset(nums1, 0, sizeof(int)*10);
-    std::memset(nums2, 0, sizeof(int)*10);
+    int nums1[10] = { 0 };
+    int nums2[10] = { 0 };
     // mark the number of times each digit is used in each num
     for (; num1 > 0; num1 /= 10)
         ++nums1[num1 % 10];
