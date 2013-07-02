@@ -40,6 +40,7 @@ bool contain_same_digits(int, int);
 bool is_prime(int, const vector<unsigned int>&);
 vector<unsigned int> find_primes(unsigned int);
 vector<unsigned int> prime_sieve(unsigned int);
+vector<int> totient_sieve(unsigned int);
 vector<int> find_repeated_sqrt(int);
 
 // template forward declares
@@ -75,6 +76,7 @@ mpz_class combinations(int n, int r) {
 int count_digits(long num) {
     /**
      * Return the number of digits in num
+     * Ex: 1318 -> 4
      */
     int c;
     for (c = 0; num > 0; num /= 10, ++c);
@@ -82,14 +84,15 @@ int count_digits(long num) {
 }
 
 int count_digits(const mpz_class& bignum) {
-    /**Count digits in a big number
+    /**
      * Return the number of digits in bignum
+     * Ex: 12345678909876543210 -> 20
      */
     return bignum.get_str().size();
 }
 
 int reverse_number(int num) {
-    /**Find reverse of a number
+    /**
      * Return the reverse of a number
      * Ex: 47 -> 74
      */
@@ -114,6 +117,7 @@ mpz_class reverse_number(const mpz_class& bignum) {
 vector<int> split_number(int num) {
     /**
      * Split the digits of a number into a vector
+     * Ex: 2345 -> <2,3,4,5>
      */
     vector<int> split;
     for (; num > 0; num /= 10)
@@ -125,7 +129,7 @@ vector<int> split_number(int num) {
 
 vector<int> split_number(mpz_class num) {
     /**
-     * Split the digits of a long number into a vector
+     * Split the digits of a big number into a vector
      */
     vector<int> split;
     for (; num > 0; num /= 10)
@@ -136,6 +140,7 @@ vector<int> split_number(mpz_class num) {
 int join_number(vector<int> split) {
     /**
      * Join together the digits of a split number in a vector
+     * Ex: <2,3,4,5> -> 2345
      */
     int n = 0;
     for (int i = 0, e = split.size(); i < e; ++i)
@@ -160,6 +165,7 @@ int digit_sum(const mpz_class& bignum) {
     int sum = 0;
     string bigstr(bignum.get_str());
     for (int i = 0; i < (int)bigstr.size(); ++i)
+        // implicit conversion from char to int
         sum += bigstr[i] - '0';
     return sum;
 }
@@ -192,7 +198,7 @@ bool contain_same_digits(int num1, int num2) {
 
 bool is_prime(int n, const vector<unsigned int>& primes) {
     /**
-     * Determine primacy of number n given vector primes,
+     * Determine primacy of number n given vector of primes,
      * containing all primes less than the square root of n
      */
     unsigned int r = sqrt(n);
@@ -241,6 +247,28 @@ vector<unsigned int> prime_sieve(unsigned int upper_limit) {
         }
     }
     return primes;
+}
+
+vector<int> totient_sieve(unsigned int upper) {
+    /*
+     * Return a vector of size upper_limit whose elements are the totient
+     * of every number < upper_limit
+     */
+    vector<int> totes(upper);
+    // Initialize the totient of n to itself
+    std::iota(totes.begin(), totes.end(), 0);
+    for (unsigned int i = 2; i < upper; ++i) {
+        if (totes[i] == i) {
+            // Then this number is prime, so everything < i is totative
+            totes[i] -= 1;
+            // Find every multiple of this prime and multiply by (1 - 1/p)
+            // --> Refactored into multiplication by ((p - 1) / p)
+            // --> to stay integral throughout the operation
+            for (unsigned int j = i + i; j < upper; j += i)
+                totes[j] = (totes[j] / i) * (i - 1);
+        }
+    }
+    return totes;
 }
 
 vector<int> find_repeated_sqrt(int num) {
@@ -292,8 +320,7 @@ bool is_palindrome(BidirectionalIterator start, BidirectionalIterator end) {
         return true;
     --end;
     while (start <= end) {
-        if (*start == *end)
-        {
+        if (*start == *end) {
             ++start;
             --end;
         }
@@ -317,8 +344,7 @@ std::pair<mpz_class, mpz_class> repeated_convergent(int k, Callable term_func) {
     std::pair<mpz_class, mpz_class> frac(term_func(k), 1);
     while (k --> 0) {
         frac.second += term_func(k) * frac.first;
-        std::swap(frac.first, frac.second);
-    }
+        std::swap(frac.first, frac.second); }
     return frac;
 }
 
@@ -334,8 +360,7 @@ std::pair<mpz_class, mpz_class> repeated_convergent(int k, const vector<int>& te
      */
     // create functor which simulates cycling of tail of terms
     return repeated_convergent(k, [&terms](int t) {
-            return (t == 0) ? terms[0]:terms[(t-1) % (terms.size()-1) + 1];
-            });
+            return (t == 0) ? terms[0]:terms[(t-1) % (terms.size()-1) + 1]; });
 }
 
 #endif
