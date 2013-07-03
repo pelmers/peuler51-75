@@ -4,7 +4,7 @@ int main(int, char**);
 
 int main(int argc, char** argv) {
     // primes up to 1 billion
-    vector<unsigned int> primes = prime_sieve(sqrt(1000000000));
+    vector<long> primes = prime_sieve(sqrt(1000000000));
     int num_primes = 8;
     int sides = 6;
     int topright;

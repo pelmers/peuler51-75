@@ -10,6 +10,7 @@
 #include <iostream>
 #include <fstream>
 // containers
+#include <array>
 #include <vector>
 #include <set>
 #include <map>
@@ -24,6 +25,25 @@ using std::cin;         using std::vector;
 using std::sqrt;        using std::string;
 using std::size_t;
 
+class PrimeWheel {
+    public:
+        PrimeWheel() {
+            current = 0;
+            holes = { { 2,4,2,4,6,2,6,4,2,4,6,6,2,6,4,2,6,4,6,8,4,2,4,2,4,8
+            ,6,4,6,2,4,6,2,6,6,4,2,4,6,2,6,4,2,4,2,10,2,10 } };
+        };
+        inline int next() {
+            if (current == holes.size())
+                current = 0;
+            return holes[current++];
+        };
+        inline int start() const { return 11; };
+    private:
+        int current;
+        std::array<int, 48> holes;
+};
+
+
 // non-template forward declares
 mpz_class combinations(int, int);
 inline int count_digits(long);
@@ -37,10 +57,9 @@ int digit_sum(int);
 int digit_sum(const mpz_class&);
 inline unsigned long concat_nums(unsigned long, unsigned long);
 bool contain_same_digits(int, int);
-bool is_prime(int, const vector<unsigned int>&);
-vector<unsigned int> find_primes(unsigned int);
-vector<unsigned int> prime_sieve(unsigned int);
-vector<int> totient_sieve(unsigned int);
+bool is_prime(int, const vector<long>&);
+vector<long> prime_sieve(long);
+vector<long> totient_sieve(long);
 vector<int> find_repeated_sqrt(int);
 
 // template forward declares
@@ -196,7 +215,7 @@ bool contain_same_digits(int num1, int num2) {
     return true;
 }
 
-bool is_prime(int n, const vector<unsigned int>& primes) {
+bool is_prime(int n, const vector<long>& primes) {
     /**
      * Determine primacy of number n given vector of primes,
      * containing all primes less than the square root of n
@@ -210,38 +229,17 @@ bool is_prime(int n, const vector<unsigned int>& primes) {
     return true;
 }
 
-vector<unsigned int> find_primes(unsigned int number) {
-    /**
-     * Return a vector of number primes, where number >= 2
-     */
-    vector<unsigned int> primes = {2, 3};
-    primes.reserve(number);
-    unsigned int p = 1;
-    while (primes.size() < number) {
-        // skip multiples of 2 and 3
-        p += 4;
-        if (is_prime(p, primes))
-            primes.push_back(p);
-        if (p == number)
-            return primes;
-        p += 2;
-        if (is_prime(p, primes))
-            primes.push_back(p);
-    }
-    return primes;
-}
-
-vector<unsigned int> prime_sieve(unsigned int upper_limit) {
+vector<long> prime_sieve(long upper_limit) {
     /**
      * Return a vector of all primes <= upper_limit
-     * Implements sieve of Eratosthenes
+     * Implements sieve of Eratosthenes with a factor wheel
      */
-    ++upper_limit;
+    PrimeWheel wheel;
     vector<bool> sieve(upper_limit, false);
-    vector<unsigned int> primes;
-    for (unsigned int i = 2; i < upper_limit; ++i) {
+    vector<long> primes = { 2, 3, 5, 7 };
+    for (long i = wheel.start(); i <= upper_limit; i += wheel.next()) {
         if (!(sieve[i])) {
-            for (unsigned int j = i*i; j < upper_limit; j += i)
+            for (long j = i*i; j <= upper_limit; j += i)
                 sieve[j] = true;
             primes.push_back(i);
         }
@@ -249,21 +247,21 @@ vector<unsigned int> prime_sieve(unsigned int upper_limit) {
     return primes;
 }
 
-vector<int> totient_sieve(unsigned int upper) {
+vector<long> totient_sieve(long upper) {
     /*
      * Return a vector of size upper_limit whose elements are the totient
      * of every number < upper_limit
      */
-    vector<int> totes(upper);
+    vector<long> totes(upper);
     // Initialize the totient of n to itself
     std::iota(totes.begin(), totes.end(), 0);
-    for (unsigned int i = 2; i < upper; ++i)
+    for (long i = 2; i < upper; ++i)
         if (totes[i] == i)
             // Then this number is prime, so everything < i is totative
             // Find every multiple of this prime and multiply by (1 - 1/p)
             // --> Refactored into multiplication by ((p - 1) / p)
             // --> to stay integral throughout the operation
-            for (unsigned int j = i; j < upper; j += i)
+            for (long j = i; j < upper; j += i)
                 totes[j] = (totes[j] / i) * (i - 1);
     return totes;
 }

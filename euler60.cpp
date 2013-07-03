@@ -3,7 +3,7 @@
 int main(void);
 
 int main(void) {
-    vector<unsigned int> primes = prime_sieve(10000);
+    vector<long> primes = prime_sieve(10000);
     int end = primes.size();
     // start at primes[1] since 2 can't concat any primes
     for (int i = 1; i < end; ++i) {

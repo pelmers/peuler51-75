@@ -3,7 +3,7 @@
 int main(void);
 
 int main(void) {
-    vector<int> totients = totient_sieve(10000000);
+    vector<long> totients = totient_sieve(10000000);
     int min_n = 9;
     for (int i = 2; i < 10000000; ++i)
         // Let the O(1) operation go first
