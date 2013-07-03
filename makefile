@@ -1,7 +1,7 @@
 ARGS = -O2 -Wall -lm -lgmp -lgmpxx -funroll-loops -std=c++0x
 TARGET_DIR = linux_bin
 
-all: docs e51 e52 e53 e54 e55 e56 e57 e58 e59 e60 e61 e62 e63 e64 e65 e66 e67 e68 e69 e70
+all: docs e51 e52 e53 e54 e55 e56 e57 e58 e59 e60 e61 e62 e63 e64 e65 e66 e67 e68 e69 e70 e71 e72 e73 e74
 
 docs:
 	doxygen Doxyfile
@@ -65,3 +65,15 @@ e69:
 
 e70:
 	$(CXX) euler70.cpp -o $(TARGET_DIR)/eu70 $(ARGS)
+
+e71:
+	$(CXX) euler71.cpp -o $(TARGET_DIR)/eu71 $(ARGS)
+
+e72:
+	$(CXX) euler72.cpp -o $(TARGET_DIR)/eu72 $(ARGS)
+
+e73:
+	$(CXX) euler73.cpp -o $(TARGET_DIR)/eu73 $(ARGS)
+
+e74:
+	$(CXX) euler74.cpp -o $(TARGET_DIR)/eu74 $(ARGS)

@@ -12,7 +12,7 @@
 // containers
 #include <array>
 #include <vector>
-#include <set>
+#include <unordered_set>
 #include <map>
 // other
 #include <string>
@@ -58,6 +58,8 @@ int digit_sum(const mpz_class&);
 inline unsigned long concat_nums(unsigned long, unsigned long);
 bool contain_same_digits(int, int);
 bool is_prime(int, const vector<long>&);
+int gcd(int, int);
+inline bool are_coprime(int, int);
 vector<long> prime_sieve(long);
 vector<long> totient_sieve(long);
 vector<int> find_repeated_sqrt(int);
@@ -227,6 +229,16 @@ bool is_prime(int n, const vector<long>& primes) {
             return false;
     }
     return true;
+}
+
+int gcd(int a, int b) {
+    if (b == 0)
+        return a;
+    return gcd(b, a % b);
+}
+
+bool are_coprime(int a, int b) {
+    return (gcd(a, b) == 1);
 }
 
 vector<long> prime_sieve(long upper_limit) {
