@@ -29,18 +29,18 @@ class PrimeWheel {
     public:
         PrimeWheel() {
             current = 0;
-            holes = { { 2,4,2,4,6,2,6,4,2,4,6,6,2,6,4,2,6,4,6,8,4,2,4,2,4,8
-            ,6,4,6,2,4,6,2,6,6,4,2,4,6,2,6,4,2,4,2,10,2,10 } };
+            holes = { { 1,2,2,4,2,4,2,4,6,2,6,4,2,4,6,6,2,6,4,2,6,4,6,8,4,
+                2,4,2,4,8,6,4,6,2,4,6,2,6,6,4,2,4,6,2,6,4,2,4,2,10,2,10 } };
         };
         inline int next() {
             if (current == holes.size())
-                current = 0;
+                current = 4;
             return holes[current++];
         };
-        inline int start() const { return 11; };
+        inline int start() const { return 2; };
     private:
         int current;
-        std::array<int, 48> holes;
+        std::array<int, 52> holes;
 };
 
 
@@ -236,7 +236,7 @@ vector<long> prime_sieve(long upper_limit) {
      */
     PrimeWheel wheel;
     vector<bool> sieve(upper_limit, false);
-    vector<long> primes = { 2, 3, 5, 7 };
+    vector<long> primes;
     for (long i = wheel.start(); i <= upper_limit; i += wheel.next()) {
         if (!(sieve[i])) {
             for (long j = i*i; j <= upper_limit; j += i)
@@ -252,10 +252,11 @@ vector<long> totient_sieve(long upper) {
      * Return a vector of size upper_limit whose elements are the totient
      * of every number < upper_limit
      */
+    PrimeWheel wheel;
     vector<long> totes(upper);
     // Initialize the totient of n to itself
     std::iota(totes.begin(), totes.end(), 0);
-    for (long i = 2; i < upper; ++i)
+    for (long i = wheel.start(); i < upper; i += wheel.next())
         if (totes[i] == i)
             // Then this number is prime, so everything < i is totative
             // Find every multiple of this prime and multiply by (1 - 1/p)
