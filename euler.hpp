@@ -59,7 +59,7 @@ inline unsigned long concat_nums(unsigned long, unsigned long);
 bool contain_same_digits(int, int);
 bool is_prime(long);
 int gcd(int, int);
-inline bool are_coprime(int, int);
+inline bool are_coprime(long, long);
 vector<long> prime_sieve(long);
 vector<long> totient_sieve(long);
 vector<int> find_repeated_sqrt(int);
@@ -231,13 +231,13 @@ bool is_prime(long n) {
     return true;
 }
 
-int gcd(int a, int b) {
+long gcd(long a, long b) {
     if (b == 0)
         return a;
     return gcd(b, a % b);
 }
 
-bool are_coprime(int a, int b) {
+bool are_coprime(long a, long b) {
     return (gcd(a, b) == 1);
 }
 
