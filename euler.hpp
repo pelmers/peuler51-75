@@ -57,7 +57,7 @@ int digit_sum(int);
 int digit_sum(const mpz_class&);
 inline unsigned long concat_nums(unsigned long, unsigned long);
 bool contain_same_digits(int, int);
-bool is_prime(int, const vector<long>&);
+bool is_prime(long);
 int gcd(int, int);
 inline bool are_coprime(int, int);
 vector<long> prime_sieve(long);
@@ -217,15 +217,15 @@ bool contain_same_digits(int num1, int num2) {
     return true;
 }
 
-bool is_prime(int n, const vector<long>& primes) {
+bool is_prime(long n) {
     /**
      * Determine primacy of number n given vector of primes,
      * containing all primes less than the square root of n
      */
+    PrimeWheel wheel;
     unsigned int r = sqrt(n);
-    auto end = primes.end();
-    for (auto it = primes.begin(); it != end && (*it) < r; ++it) {
-        if (!(n % (*it)))
+    for (long p = wheel.start(); p <= r; p += wheel.next()) {
+        if (!(n % p))
             return false;
     }
     return true;

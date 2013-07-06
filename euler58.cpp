@@ -4,7 +4,6 @@ int main(int, char**);
 
 int main(int argc, char** argv) {
     // primes up to 1 billion
-    vector<long> primes = prime_sieve(sqrt(1000000000));
     int num_primes = 8;
     int sides = 6;
     int topright;
@@ -15,11 +14,11 @@ int main(int argc, char** argv) {
         botleft = (sides+1)*(sides+1) - sides;
         topleft  = botleft - sides;
         topright = topleft - sides;
-        if (is_prime(topright, primes))
+        if (is_prime(topright))
             ++num_primes;
-        if (is_prime(topleft, primes))
+        if (is_prime(topleft))
             ++num_primes;
-        if (is_prime(botleft, primes))
+        if (is_prime(botleft))
             ++num_primes;
     }
     cout << "Side length: " << sides+1 << '\n';

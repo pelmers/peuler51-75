@@ -8,32 +8,32 @@ int main(void) {
     // start at primes[1] since 2 can't concat any primes
     for (int i = 1; i < end; ++i) {
         for (int j = i+1; j < end; ++j) {
-            if (!(is_prime(concat_nums(primes[i], primes[j]),primes) &&
-                    is_prime(concat_nums(primes[j], primes[i]),primes)))
+            if (!(is_prime(concat_nums(primes[i], primes[j])) &&
+                    is_prime(concat_nums(primes[j], primes[i]))))
                 continue;
             for (int k = j+1; k < end; ++k) {
-                if (!(is_prime(concat_nums(primes[i],primes[k]),primes) &&
-                        is_prime(concat_nums(primes[k],primes[i]),primes) &&
-                        is_prime(concat_nums(primes[j],primes[k]),primes) &&
-                        is_prime(concat_nums(primes[k],primes[j]),primes)))
+                if (!(is_prime(concat_nums(primes[i],primes[k])) &&
+                        is_prime(concat_nums(primes[k],primes[i])) &&
+                        is_prime(concat_nums(primes[j],primes[k])) &&
+                        is_prime(concat_nums(primes[k],primes[j]))))
                     continue;
                 for (int l = k+1; l < end; ++l) {
-                    if (!(is_prime(concat_nums(primes[i],primes[l]),primes) &&
-                            is_prime(concat_nums(primes[l],primes[i]),primes) &&
-                            is_prime(concat_nums(primes[j],primes[l]),primes) &&
-                            is_prime(concat_nums(primes[l],primes[j]),primes) &&
-                            is_prime(concat_nums(primes[k],primes[l]),primes) &&
-                            is_prime(concat_nums(primes[l],primes[k]),primes)))
+                    if (!(is_prime(concat_nums(primes[i],primes[l])) &&
+                            is_prime(concat_nums(primes[l],primes[i])) &&
+                            is_prime(concat_nums(primes[j],primes[l])) &&
+                            is_prime(concat_nums(primes[l],primes[j])) &&
+                            is_prime(concat_nums(primes[k],primes[l])) &&
+                            is_prime(concat_nums(primes[l],primes[k]))))
                         continue;
                     for (int m = l+1; m < end; ++m) {
-                        if (!(is_prime(concat_nums(primes[i],primes[m]),primes) &&
-                                    is_prime(concat_nums(primes[m],primes[i]),primes) &&
-                                    is_prime(concat_nums(primes[j],primes[m]),primes) &&
-                                    is_prime(concat_nums(primes[m],primes[j]),primes) &&
-                                    is_prime(concat_nums(primes[k],primes[m]),primes) &&
-                                    is_prime(concat_nums(primes[m],primes[k]),primes) &&
-                                    is_prime(concat_nums(primes[l],primes[m]),primes) &&
-                                    is_prime(concat_nums(primes[m],primes[l]),primes)))
+                        if (!(is_prime(concat_nums(primes[i],primes[m])) &&
+                                    is_prime(concat_nums(primes[m],primes[i])) &&
+                                    is_prime(concat_nums(primes[j],primes[m])) &&
+                                    is_prime(concat_nums(primes[m],primes[j])) &&
+                                    is_prime(concat_nums(primes[k],primes[m])) &&
+                                    is_prime(concat_nums(primes[m],primes[k])) &&
+                                    is_prime(concat_nums(primes[l],primes[m])) &&
+                                    is_prime(concat_nums(primes[m],primes[l]))))
                             continue;
                         cout << primes[i] << " + " << primes[j] << " + " <<
                             primes[k] << " + " << primes[l] << " + " << primes[m] << " = " <<
